@@ -1,0 +1,26 @@
+image:
+  name: registry-intl.me-east-1.aliyuncs.com/noonpay_development/maven:updated
+  username: $REGISTRY_USERNAME
+  password: $REGISTRY_PASSWORD
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - maven
+        script:
+          - mvn clean install
+  branches:
+    master:
+    - step:
+        caches:
+          - maven
+        script:
+          - mvn -V -B clean deploy
+    feature*:
+    - step:
+        caches:
+          - maven
+        script:
+          - mvn -V -B clean deploy
+          
